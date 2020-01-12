@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createControl, validate, validateForm } from '../../form/formFramework';
+import axios from '../../axios/axios-quiz';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import Select from '../../components/UI/Select/Select';
@@ -31,6 +32,7 @@ export default class QuizCreator extends Component {
 
   state = {
     quiz: [],
+    quizName: '',
     isFormValid: false,
     rightAnswerId: 1,
     formControls: createFormControls()
@@ -66,13 +68,29 @@ export default class QuizCreator extends Component {
       quiz,
       isFormValid: false,
       rightAnswerId: 1,
-      formControls: createFormControls()
+      formControls: createFormControls(this.state.quizName)
     })
   };
 
-  createQuizHandler = event => {
+  createQuizHandler = async event => {
     event.preventDefault();
-    console.log(this.state.quiz);
+
+    try {
+      await axios.post('/quizes.json', {
+        name: this.state.quizName,
+        items: this.state.quiz
+      });
+
+      this.setState({
+        quiz: [],
+        quizName: '',
+        isFormValid: false,
+        rightAnswerId: 1,
+        formControls: createFormControls()
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   changeHandler = (value, controlName) => {
@@ -135,6 +153,13 @@ export default class QuizCreator extends Component {
         <div>
           <h1>Создание теста</h1>
           <form onSubmit={this.submitHandler}>
+            <Input
+              label="Название теста"
+              value={this.state.quizName}
+              onChange={event => this.setState({ quizName: event.target.value })}
+            />
+            <br/>
+            <br/>
             { this.renderControls() }
             { select }
             <Button
