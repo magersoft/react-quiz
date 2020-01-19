@@ -18,7 +18,8 @@ export function fetchQuizes() {
       Object.keys(data).forEach((key, index) => {
         quizes.push({
           id: key,
-          name: `${index + 1}. ${data[key].name}`
+          name: `${index + 1}. ${data[key].name}`,
+          author: data[key].author
         })
       });
       dispatch(fetchQuizesSuccess(quizes))

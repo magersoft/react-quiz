@@ -1,11 +1,17 @@
 import React from 'react';
-import style from './Button.module.scss';
 
 const Button = props => {
   const classes = [
-    style.Button,
-    style[props.type]
+    'waves-effect waves-light btn'
   ];
+
+  if (props.type === 'primary') {
+    classes.push('light-blue');
+  }
+
+  if (props.type === 'success') {
+    classes.push('green');
+  }
 
   return (
     <button

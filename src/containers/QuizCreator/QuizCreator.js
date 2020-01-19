@@ -76,7 +76,7 @@ class QuizCreator extends Component {
       rightAnswerId: 1,
       formControls: createFormControls()
     });
-    this.props.finishCreateQuiz(this.state.quizName)
+    this.props.finishCreateQuiz(this.state.quizName, this.props.login)
   };
 
   changeHandler = (value, controlName) => {
@@ -116,7 +116,6 @@ class QuizCreator extends Component {
             errorMessage={control.errorMessage}
             onChange={event => this.changeHandler(event.target.value, controlName)}
           />
-          { index === 0 ? <hr /> : null }
         </Auxilary>
       )
     })
@@ -144,8 +143,6 @@ class QuizCreator extends Component {
               value={this.state.quizName}
               onChange={event => this.setState({ quizName: event.target.value })}
             />
-            <br/>
-            <br/>
             { this.renderControls() }
             { select }
             <Button
@@ -171,14 +168,15 @@ class QuizCreator extends Component {
 
 function mapStateToProps(state) {
   return {
-    quiz: state.create.quiz
+    quiz: state.create.quiz,
+    login: state.auth.login
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     createQuizQuestion: item => dispatch(createQuizQuestion(item)),
-    finishCreateQuiz: name => dispatch(finishCreateQuiz(name))
+    finishCreateQuiz: (name, author) => dispatch(finishCreateQuiz(name, author))
   }
 }
 

@@ -7,11 +7,12 @@ import QuizList from './containers/QuizList/QuizList';
 import QuizCreator from './containers/QuizCreator/QuizCreator';
 import Auth from './containers/Auth/Auth';
 import Logout from './components/Logout/Logout';
-import { autoLogin } from './store/actions/auth';
+import { autoLogin, getUserData } from './store/actions/auth';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.autoLogin()
+  async componentDidMount() {
+    await this.props.autoLogin();
+    await this.props.getUserData();
   }
 
   render() {
@@ -52,7 +53,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    autoLogin: () => dispatch(autoLogin())
+    autoLogin: () => dispatch(autoLogin()),
+    getUserData: () => dispatch(getUserData())
   }
 }
 

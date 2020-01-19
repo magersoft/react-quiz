@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import Loader from '../../components/UI/Loader/Loader';
 import style from './QuizList.module.scss';
 import { connect } from 'react-redux';
 import { fetchQuizes } from '../../store/actions/quiz';
@@ -10,10 +9,13 @@ class QuizList extends Component {
   renderQuizes() {
     return this.props.quizes.map(quiz => {
       return (
-        <li key={quiz.id}>
-          <NavLink to={'/quiz/' + quiz.id}>
-            { quiz.name }
-          </NavLink>
+        <li key={quiz.id} className="collection-item">
+          <div>
+            { quiz.name } - <small>({ quiz.author })</small>
+            <NavLink to={'/quiz/' + quiz.id} className="secondary-content">
+              <i className="material-icons">send</i>
+            </NavLink>
+          </div>
         </li>
       )
     })
@@ -29,13 +31,17 @@ class QuizList extends Component {
         <div>
           <h1>Список вопросов</h1>
 
-          {
-            this.props.loading && !this.props.quizes.length
-              ? <Loader/>
-              : <ul>
-                  { this.renderQuizes() }
-                </ul>
-          }
+            <ul className="collection">
+            {
+              this.props.loading && !this.props.quizes.length ?
+              <li className="collection-item">
+                <div className="progress">
+                  <div className="indeterminate"></div>
+                </div>
+              </li>
+                : this.renderQuizes()
+            }
+            </ul>
 
         </div>
       </div>

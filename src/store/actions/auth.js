@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_LOGOUT, AUTH_SUCCESS } from './actionTypes';
+import { AUTH_LOGOUT, AUTH_SUCCESS, GET_USER_DATA } from './actionTypes';
 
 export function auth(email, password, isLogin) {
   return async dispatch => {
@@ -64,5 +64,23 @@ export function autoLogout(time) {
     setTimeout(() => {
       dispatch(logout())
     }, time * 1000);
+  }
+}
+
+export function getUserData() {
+  return async dispatch => {
+    const idToken = localStorage.getItem('token');
+    if (idToken) {
+      const { data } = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDUb3kV8_6SVzHANPtz1qTMmeP4-kFMH0Y', { idToken });
+      const login = data.users[0].email;
+      dispatch(setLogin(login));
+    }
+  }
+}
+
+export function setLogin(login) {
+  return {
+    type: GET_USER_DATA,
+    login
   }
 }

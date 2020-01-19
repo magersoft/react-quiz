@@ -10,6 +10,7 @@ import rootReducer from './store/reducers/rootReducer';
 import App from './App';
 
 import './index.scss';
+import 'materialize-css/dist/css/materialize.min.css'
 
 const composeEnhancers =
   typeof window === 'object' &&

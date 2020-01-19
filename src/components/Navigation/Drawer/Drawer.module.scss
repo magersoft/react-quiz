@@ -1,9 +1,12 @@
 .Drawer {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
   width: 80%;
+  height: 100%;
   max-width: 300px;
   padding: 20px 10px;
   box-sizing: border-box;
@@ -26,10 +29,9 @@
 
       a {
         color: #363d54;
-        font-size: 30px;
+        font-size: 2rem;
         text-decoration: none;
         position: relative;
-        padding: 0 20px 10px 0;
         transition: opacity .3s;
 
         &:hover, &.active {
@@ -37,5 +39,9 @@
         }
       }
     }
+  }
+
+  .login {
+    color: black
   }
 }

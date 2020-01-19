@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import style from './Drawer.module.scss';
+import { connect } from 'react-redux';
 
-export default class Drawer extends Component {
+class Drawer extends Component {
 
   renderLinks = (links) => {
     return links.map((link, index) => {
@@ -50,9 +51,18 @@ export default class Drawer extends Component {
         <ul>
           { this.renderLinks(links) }
         </ul>
+        { this.props.isAuthenticated ? <div className={style.login}>Вы авторизованы: { this.props.login }</div> : null }
       </nav>
         { this.props.isOpen ? <Backdrop onClick={this.props.onClose} /> : null }
       </>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    login: state.auth.login
+  }
+}
+
+export default connect(mapStateToProps)(Drawer);

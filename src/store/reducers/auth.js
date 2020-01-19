@@ -1,10 +1,11 @@
-import { AUTH_LOGOUT, AUTH_SUCCESS } from '../actions/actionTypes';
+import { AUTH_LOGOUT, AUTH_SUCCESS, GET_USER_DATA } from '../actions/actionTypes';
 
 const initialState = {
-  token: null
+  token: null,
+  login: null
 };
 
-export default function authRecuder(state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
       return {
@@ -13,6 +14,10 @@ export default function authRecuder(state = initialState, action) {
     case AUTH_LOGOUT:
       return {
         ...state, token: null
+      };
+    case GET_USER_DATA:
+      return {
+        ...state, login: action.login
       };
     default:
       return state;

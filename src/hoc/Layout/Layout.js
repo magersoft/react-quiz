@@ -36,6 +36,7 @@ class Layout extends Component {
         <main>
           { this.props.children }
         </main>
+        <div className={style.poweredBy} />
       </div>
     )
   }

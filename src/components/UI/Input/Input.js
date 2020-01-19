@@ -1,4 +1,5 @@
 import React from 'react';
+import M from 'materialize-css';
 import style from './Input.module.scss';
 
 function isInvalid({ valid, touched, shouldValidate }) {
@@ -7,23 +8,24 @@ function isInvalid({ valid, touched, shouldValidate }) {
 
 const Input = props => {
   const inputType = props.type || 'text';
-  const classes = [style.Input];
+  const classes = [style.Input, 'input-field'];
   const id = `${inputType}-${Math.random()}`;
 
   if (isInvalid(props)) {
     classes.push(style.invalid);
   }
 
+  M.updateTextFields();
+
   return (
     <div className={classes.join(' ')}>
-      <label htmlFor={id}>{ props.label }</label>
-      <input
-        id={id}
-        type={inputType}
-        value={props.value}
-        onChange={props.onChange}
+      <input id={id}
+             type={inputType}
+             value={props.value}
+             onChange={props.onChange}
       />
-      { isInvalid(props) ? <span>{props.errorMessage || 'Введите верное значение'}</span> : null }
+        <label htmlFor={id}>{ props.label }</label>
+        { isInvalid(props) ? <span>{props.errorMessage || 'Введите верное значение'}</span> : null }
     </div>
   )
 };
