@@ -6,14 +6,14 @@ import {
   FETCH_QUIZES_SUCCESS,
   FINISH_QUIZ,
   QUIZ_NEXT_QUESTION, QUIZ_RETRY,
-  QUIZ_SET_STATE
+  QUIZ_SET_STATE, REMOVE_QUIZ
 } from './actionTypes';
 
 export function fetchQuizes() {
   return async dispatch => {
     dispatch(fetchQuizesStart());
     try {
-      const { data } = await axios.get('quizes.json');
+      const { data } = await axios.get(`quizes.json`);
       const quizes = [];
       Object.keys(data).forEach((key, index) => {
         quizes.push({
@@ -65,6 +65,24 @@ export function fetchQuizesError(error) {
   return {
     type: FETCH_QUIZES_ERROR,
     error
+  }
+}
+
+export function removeQuiz(quizId) {
+  return async dispatch => {
+    try {
+      await axios.delete(`/quizes/${quizId}.json`);
+      dispatch(removedQuiz(quizId))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+
+export function removedQuiz(quizId) {
+  return {
+    type: REMOVE_QUIZ,
+    quizId
   }
 }
 

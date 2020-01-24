@@ -30,26 +30,11 @@ class Drawer extends Component {
       classes.push(style.close);
     }
 
-    const links = [
-      { to: '/', label: 'Список', exact: true }
-    ];
-
-    if (this.props.isAuthenticated) {
-      links.push(
-        { to: '/quiz-creator', label: 'Создать тест', exact: false },
-        { to: '/logout', label: 'Выйти', exact: false }
-      )
-    } else {
-      links.push(
-        { to: '/auth', label: 'Авторизация', exact: false }
-      )
-    }
-
     return (
       <>
       <nav className={classes.join(' ')}>
         <ul>
-          { this.renderLinks(links) }
+          { this.renderLinks(this.props.links) }
         </ul>
         { this.props.isAuthenticated ? <div className={style.login}>Вы авторизованы: { this.props.login }</div> : null }
       </nav>

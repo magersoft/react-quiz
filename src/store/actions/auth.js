@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { AUTH_LOGOUT, AUTH_SUCCESS, GET_USER_DATA } from './actionTypes';
+import Message from '../../utils/Message';
+import { errors } from '../../language/ru_RU'
 
 export function auth(email, password, isLogin) {
   return async dispatch => {
@@ -20,7 +22,11 @@ export function auth(email, password, isLogin) {
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(authSuccess(data.idToken));
       dispatch(autoLogout(data.expiresIn));
+      dispatch(setLogin(data.email))
     } catch (e) {
+      const { message } = e.response.data.error;
+      const m = new Message(errors[message] || message, 'danger');
+      m.call();
       console.error(e);
     }
   }
