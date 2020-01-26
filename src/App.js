@@ -8,7 +8,6 @@ import QuizCreator from './containers/QuizCreator/QuizCreator';
 import Auth from './containers/Auth/Auth';
 import Logout from './components/Logout/Logout';
 import { autoLogin, getUserData } from './store/actions/auth';
-import axios from 'axios';
 
 class App extends Component {
   async componentDidMount() {
@@ -17,16 +16,6 @@ class App extends Component {
   }
 
   render() {
-    axios.interceptors.request.use(config => {
-      if (this.props.isAuthenticated) {
-        config.params = { auth: this.props.token };
-      }
-      return config;
-    }, error => {
-      return Promise.reject(error)
-    });
-
-
     let routes = (
       <Switch>
         <Route path="/auth" component={Auth} />

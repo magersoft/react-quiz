@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import style from './QuizList.module.scss';
+import M from 'materialize-css';
 import { connect } from 'react-redux';
 import { fetchQuizes, removeQuiz } from '../../store/actions/quiz';
+import Modal from '../../components/UI/Modal/Modal';
 
 class QuizList extends Component {
+
+  state = {
+    removeId: null
+  };
 
   renderQuizes() {
     return this.props.quizes.map(quiz => {
@@ -20,10 +26,11 @@ class QuizList extends Component {
                 <i
                   className="material-icons red-text darken-2"
                   style={{cursor: 'pointer'}}
-                  onClick={() => this.removeHandler(quiz.id)}
+                  onClick={() => this.modalHandler(quiz.id)}
                 >
                   delete
-                </i> : null
+                </i>
+                : null
               }
               <NavLink to={'/quiz/' + quiz.id}>
                 <i className="material-icons">send</i>
@@ -39,9 +46,37 @@ class QuizList extends Component {
     this.props.fetchQuizes();
   }
 
-  removeHandler(id) {
-    this.props.removeQuiz(id);
+  openModal() {
+    const el = document.getElementById('modal');
+    const modalInstance = M.Modal.getInstance(el);
+    modalInstance.open();
   }
+
+  closeModal() {
+    const el = document.getElementById('modal');
+    const modalInstance = M.Modal.getInstance(el);
+    modalInstance.close();
+  }
+
+  modalHandler(id) {
+    this.setState({
+      removeId: id
+    });
+
+    this.openModal();
+  }
+
+  confirmHandler = () => {
+    this.props.removeQuiz(this.state.removeId);
+    this.closeModal()
+  };
+
+  cancelHandler = () => {
+    this.setState({
+      removeId: null
+    });
+    this.closeModal();
+  };
 
   render() {
     let emptyContent;
@@ -65,7 +100,14 @@ class QuizList extends Component {
                 : this.renderQuizes()
             }
             </ul>
-
+            <Modal
+              id="modal"
+              title="Вы действительно хотите удалить?"
+              confirm="Удалить"
+              cancel="Отмена"
+              onConfirm={this.confirmHandler}
+              onCancel={this.cancelHandler}
+            />
         </div>
       </div>
     )

@@ -13,6 +13,10 @@ const Button = props => {
     classes.push('green');
   }
 
+  if (props.flat) {
+    classes.push('btn-flat')
+  }
+
   return (
     <button
       onClick={props.onClick}
