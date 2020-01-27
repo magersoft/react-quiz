@@ -87,7 +87,7 @@ class QuizList extends Component {
     return (
       <div className={style.QuizList}>
         <div>
-          <h1>Список вопросов</h1>
+          <h1>Список тестов</h1>
             { emptyContent }
             <ul className="collection">
             {

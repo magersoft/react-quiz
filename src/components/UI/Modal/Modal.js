@@ -16,7 +16,7 @@ export default class Modal extends Component {
     return (
       <div id={this.props.id} className={'modal ' + styles.Modal}>
         <div className="modal-content">
-          <h4>{ this.props.title }</h4>
+          <h6>{ this.props.title }</h6>
           { this.props.children }
         </div>
         <div className="modal-footer">

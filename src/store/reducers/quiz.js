@@ -16,7 +16,8 @@ const initialState = {
   isFinished: false,
   activeQuestion: 0,
   answerState: null,
-  quiz: null
+  quiz: null,
+  name: ''
 };
 
 export default function quizReducer(state = initialState, action) {
@@ -35,7 +36,7 @@ export default function quizReducer(state = initialState, action) {
       };
     case FETCH_QUIZ_SUCCESS:
       return {
-        ...state, loading: false, quiz: action.quiz
+        ...state, loading: false, quiz: action.quiz.items, name: action.quiz.name
       };
     case REMOVE_QUIZ:
       return {
@@ -59,7 +60,8 @@ export default function quizReducer(state = initialState, action) {
         activeQuestion: 0,
         answerState: null,
         isFinished: false,
-        results: {}
+        results: {},
+        name: ''
       };
     default:
       return state;

@@ -20,7 +20,7 @@ class Quiz extends Component {
     return (
       <div className={style.Quiz}>
         <div className={style.QuizWrapper}>
-          <h1>Есть вопросики (React.js)</h1>
+          <h1>{ this.props.name }</h1>
 
           {
             this.props.loading || !this.props.quiz ? <Loader/> : this.props.isFinished
@@ -51,7 +51,8 @@ function mapStateToProps(state) {
     activeQuestion: state.quiz.activeQuestion,
     answerState: state.quiz.answerState,
     quiz: state.quiz.quiz,
-    loading: state.quiz.loading
+    loading: state.quiz.loading,
+    name: state.quiz.name
   }
 }
 

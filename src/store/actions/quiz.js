@@ -44,7 +44,7 @@ export function fetchQuizById(quizId) {
 export function fetchQuizSuccess(quiz) {
   return {
     type: FETCH_QUIZ_SUCCESS,
-    quiz: quiz.items
+    quiz
   }
 }
 
