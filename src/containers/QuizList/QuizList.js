@@ -17,10 +17,7 @@ class QuizList extends Component {
       return (
         <li key={quiz.id} className="collection-item">
           <div>
-            <NavLink to={'/quiz/' + quiz.id}>
-              { quiz.name }
-            </NavLink>&nbsp;
-            <small>({ quiz.author })</small>
+            { quiz.name } - <small>({ quiz.author })</small>
             <div className={'secondary-content ' + style.actions}>
               { this.props.login === quiz.author ?
                 <i
@@ -32,7 +29,7 @@ class QuizList extends Component {
                 </i>
                 : null
               }
-              <NavLink to={'/quiz/' + quiz.id}>
+              <NavLink to={'/quiz/' + quiz.id} className="secondary-content">
                 <i className="material-icons">send</i>
               </NavLink>
             </div>
@@ -80,7 +77,7 @@ class QuizList extends Component {
 
   render() {
     let emptyContent;
-    if (!this.props.quizes.length) {
+    if (!this.props.quizes.length && !this.props.loading) {
       emptyContent = <h3 style={{textAlign: 'center'}}>Ничего не найдено</h3>
     }
 
